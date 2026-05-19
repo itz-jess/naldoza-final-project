@@ -18,13 +18,11 @@ RUN apt-get update && apt-get install -y \
 # Enable Apache rewrite module
 RUN a2enmod rewrite
 
-# FIX 1: Configure Apache to bind to correct port and host
-# This tells Apache: "Listen on ALL network interfaces (0.0.0.0) at port 10000"
+# Configure Apache to bind to correct port and host
 RUN sed -i 's/Listen 80/Listen 0.0.0.0:10000/g' /etc/apache2/ports.conf \
     && sed -i 's/<VirtualHost \*:80>/<VirtualHost *:10000>/g' /etc/apache2/sites-available/000-default.conf
 
-# FIX 2: Prevent Apache host resolution issues
-# This stops the "Could not reliably determine server's FQDN" warning
+# Set ServerName to prevent host resolution warnings
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # Set Laravel public as document root
@@ -74,9 +72,20 @@ RUN mkdir -p storage/framework/cache storage/framework/sessions \
 # Run migrations (ignore errors if database not ready)
 RUN php artisan migrate --force || true
 
+# ===== FIX: Set Apache environment variables =====
+ENV APACHE_RUN_USER=www-data
+ENV APACHE_RUN_GROUP=www-data
+ENV APACHE_PID_FILE=/var/run/apache2/apache2.pid
+ENV APACHE_RUN_DIR=/var/run/apache2
+ENV APACHE_LOCK_DIR=/var/lock/apache2
+ENV APACHE_LOG_DIR=/var/log/apache2
+ENV APACHE_SERVER_NAME=localhost
+
+# Create required Apache directories
+RUN mkdir -p ${APACHE_RUN_DIR} ${APACHE_LOCK_DIR} ${APACHE_LOG_DIR}
+
 # Expose port 10000 to Render
 EXPOSE 10000
 
-# FIX 3: Keep Apache running in foreground (prevents SIGWINCH shutdown)
-# This ensures Apache stays alive and doesn't exit
+# Start Apache in foreground
 CMD ["apache2", "-DFOREGROUND"]
