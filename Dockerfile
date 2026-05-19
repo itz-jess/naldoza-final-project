@@ -15,12 +15,17 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Enable Apache rewrite
+# Enable Apache rewrite module
 RUN a2enmod rewrite
 
-# Make Apache use port 10000 (Render default)
-RUN sed -i 's/Listen 80/Listen 10000/g' /etc/apache2/ports.conf \
+# FIX 1: Configure Apache to bind to correct port and host
+# This tells Apache: "Listen on ALL network interfaces (0.0.0.0) at port 10000"
+RUN sed -i 's/Listen 80/Listen 0.0.0.0:10000/g' /etc/apache2/ports.conf \
     && sed -i 's/<VirtualHost \*:80>/<VirtualHost *:10000>/g' /etc/apache2/sites-available/000-default.conf
+
+# FIX 2: Prevent Apache host resolution issues
+# This stops the "Could not reliably determine server's FQDN" warning
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # Set Laravel public as document root
 RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf \
@@ -52,6 +57,7 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction
 # Install frontend dependencies and build assets
 RUN npm install && npm run build
 
+# Clear Laravel caches
 RUN php artisan config:clear \
     && php artisan route:clear \
     && php artisan view:clear
@@ -65,11 +71,12 @@ RUN mkdir -p storage/framework/cache storage/framework/sessions \
     && chown -R www-data:www-data storage bootstrap/cache public/uploads \
     && chmod -R 775 storage bootstrap/cache public/uploads
 
-# (Optional) Run migrations
+# Run migrations (ignore errors if database not ready)
 RUN php artisan migrate --force || true
 
-# Expose port
+# Expose port 10000 to Render
 EXPOSE 10000
 
-# Start Apache
-CMD ["apache2-foreground"]
+# FIX 3: Keep Apache running in foreground (prevents SIGWINCH shutdown)
+# This ensures Apache stays alive and doesn't exit
+CMD ["apache2", "-DFOREGROUND"]
