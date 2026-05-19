@@ -1,3 +1,505 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* =============================================
+   DESIGN SYSTEM - JESS TECH
+   Professional SaaS-style Employee Management System
+   ============================================= */
+
+/* TYPOGRAPHY */
+@layer base {
+    body {
+        @apply text-slate-900 bg-slate-50 font-sans;
+    }
+
+    h1 {
+        @apply text-3xl font-bold text-slate-900 leading-tight;
+    }
+
+    h2 {
+        @apply text-2xl font-bold text-slate-900 leading-tight;
+    }
+
+    h3 {
+        @apply text-xl font-semibold text-slate-900 leading-tight;
+    }
+
+    h4 {
+        @apply text-lg font-semibold text-slate-900 leading-tight;
+    }
+
+    h5 {
+        @apply text-base font-semibold text-slate-900 leading-tight;
+    }
+
+    h6 {
+        @apply text-sm font-semibold text-slate-900 leading-tight;
+    }
+
+    p {
+        @apply text-base text-slate-600 leading-relaxed;
+    }
+
+    a {
+        @apply text-primary-600 hover:text-primary-700 transition-colors duration-fast;
+    }
+}
+
+/* =============================================
+   COMPONENTS
+   ============================================= */
+
+/* BUTTONS */
+@layer components {
+    .btn {
+        @apply inline-flex items-center justify-center px-4 py-2.5 font-medium rounded-lg transition-all duration-fast cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed active:scale-95;
+    }
+
+    .btn-primary {
+        @apply btn bg-primary-600 text-white hover:bg-primary-700 active:bg-primary-800 shadow-sm hover:shadow-md;
+    }
+
+    .btn-secondary {
+        @apply btn bg-slate-200 text-slate-900 hover:bg-slate-300 active:bg-slate-400 shadow-sm;
+    }
+
+    .btn-outline {
+        @apply btn border border-slate-300 text-slate-700 hover:border-slate-400 hover:bg-slate-50 active:bg-slate-100;
+    }
+
+    .btn-danger {
+        @apply btn bg-danger text-white hover:bg-red-600 active:bg-red-700 shadow-sm hover:shadow-md;
+    }
+
+    .btn-success {
+        @apply btn bg-success text-white hover:bg-green-600 active:bg-green-700 shadow-sm hover:shadow-md;
+    }
+
+    .btn-warning {
+        @apply btn bg-warning text-white hover:bg-amber-500 active:bg-amber-600 shadow-sm hover:shadow-md;
+    }
+
+    .btn-ghost {
+        @apply btn text-slate-600 hover:text-slate-900 hover:bg-slate-100 active:bg-slate-200;
+    }
+
+    /* Button sizes */
+    .btn-sm {
+        @apply px-3 py-1.5 text-sm;
+    }
+
+    .btn-lg {
+        @apply px-6 py-3 text-lg;
+    }
+
+    .btn-full {
+        @apply w-full;
+    }
+}
+
+/* CARDS */
+@layer components {
+    .card {
+        @apply bg-white border border-slate-200 rounded-xl shadow-xs hover:shadow-sm transition-shadow duration-fast;
+    }
+
+    .card-body {
+        @apply p-6;
+    }
+
+    .card-header {
+        @apply px-6 py-4 border-b border-slate-200;
+    }
+
+    .card-footer {
+        @apply px-6 py-4 border-t border-slate-200 bg-slate-50;
+    }
+}
+
+/* FORMS */
+@layer components {
+    .form-group {
+        @apply mb-6;
+    }
+
+    .form-label {
+        @apply block text-sm font-medium text-slate-700 mb-2;
+    }
+
+    .form-input,
+    .form-textarea,
+    .form-select {
+        @apply w-full px-4 py-2.5 border border-slate-300 rounded-lg text-slate-900 placeholder-slate-400 transition-colors duration-fast focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent;
+    }
+
+    .form-textarea {
+        @apply resize-vertical;
+    }
+
+    .form-checkbox,
+    .form-radio {
+        @apply w-4 h-4 border-slate-300 rounded text-primary-600 focus:ring-primary-500 transition-colors duration-fast;
+    }
+
+    .form-help {
+        @apply mt-1 text-xs text-slate-500;
+    }
+
+    .form-error {
+        @apply mt-1 text-xs text-danger;
+    }
+
+    .form-input-error {
+        @apply border-danger focus:ring-danger focus:border-transparent;
+    }
+}
+
+/* TABLES */
+@layer components {
+    .table-container {
+        @apply overflow-x-auto;
+    }
+
+    .table {
+        @apply w-full border-collapse text-sm;
+    }
+
+    .table th {
+        @apply px-6 py-3 text-left text-xs font-semibold text-slate-700 bg-slate-100 border-b border-slate-200;
+    }
+
+    .table td {
+        @apply px-6 py-4 border-b border-slate-200;
+    }
+
+    .table tbody tr {
+        @apply hover:bg-slate-50 transition-colors duration-fast;
+    }
+
+    .table tbody tr:last-child td {
+        @apply border-b-0;
+    }
+
+    .table-striped tbody tr:nth-child(even) {
+        @apply bg-slate-50;
+    }
+
+    .table-striped tbody tr:nth-child(even):hover {
+        @apply bg-slate-100;
+    }
+}
+
+/* BADGES */
+@layer components {
+    .badge {
+        @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium;
+    }
+
+    .badge-primary {
+        @apply bg-primary-100 text-primary-700;
+    }
+
+    .badge-success {
+        @apply bg-green-100 text-green-700;
+    }
+
+    .badge-danger {
+        @apply bg-red-100 text-red-700;
+    }
+
+    .badge-warning {
+        @apply bg-amber-100 text-amber-700;
+    }
+
+    .badge-slate {
+        @apply bg-slate-100 text-slate-700;
+    }
+}
+
+/* ALERTS */
+@layer components {
+    .alert {
+        @apply px-4 py-3 rounded-lg border text-sm;
+    }
+
+    .alert-success {
+        @apply bg-green-50 border-green-200 text-green-800;
+    }
+
+    .alert-danger {
+        @apply bg-red-50 border-red-200 text-red-800;
+    }
+
+    .alert-warning {
+        @apply bg-amber-50 border-amber-200 text-amber-800;
+    }
+
+    .alert-info {
+        @apply bg-blue-50 border-blue-200 text-blue-800;
+    }
+}
+
+/* INPUT GROUPS */
+@layer components {
+    .input-group {
+        @apply flex items-center border border-slate-300 rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-primary-500 focus-within:border-transparent;
+    }
+
+    .input-group-icon {
+        @apply px-3 text-slate-400;
+    }
+
+    .input-group input {
+        @apply flex-1 border-0 px-4 py-2.5 focus:ring-0;
+    }
+}
+
+/* MODALS */
+@layer components {
+    .modal-overlay {
+        @apply fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4;
+    }
+
+    .modal {
+        @apply bg-white rounded-xl shadow-xl max-w-md w-full;
+    }
+
+    .modal-header {
+        @apply px-6 py-4 border-b border-slate-200;
+    }
+
+    .modal-body {
+        @apply px-6 py-4;
+    }
+
+    .modal-footer {
+        @apply px-6 py-4 border-t border-slate-200 bg-slate-50 flex justify-end gap-2;
+    }
+}
+
+/* NAVIGATION */
+@layer components {
+    .navbar {
+        @apply bg-white border-b border-slate-200 shadow-xs sticky top-0 z-40;
+    }
+
+    .navbar-container {
+        @apply max-w-7xl mx-auto px-6 py-4 flex items-center justify-between;
+    }
+
+    .navbar-brand {
+        @apply text-xl font-bold text-primary-600 hover:text-primary-700 transition-colors;
+    }
+
+    .navbar-nav {
+        @apply flex items-center gap-8;
+    }
+
+    .navbar-link {
+        @apply text-sm text-slate-600 hover:text-slate-900 transition-colors duration-fast;
+    }
+
+    .navbar-link.active {
+        @apply text-primary-600 font-medium border-b-2 border-primary-600 pb-4;
+    }
+}
+
+/* SIDEBAR */
+@layer components {
+    .sidebar {
+        @apply bg-white border-r border-slate-200 h-screen overflow-y-auto sticky top-0;
+    }
+
+    .sidebar-nav {
+        @apply px-4 py-6 space-y-1;
+    }
+
+    .sidebar-link {
+        @apply block px-4 py-2.5 rounded-lg text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors duration-fast;
+    }
+
+    .sidebar-link.active {
+        @apply bg-primary-50 text-primary-600 font-medium;
+    }
+
+    .sidebar-title {
+        @apply px-4 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wide;
+    }
+}
+
+/* PAGINATION */
+@layer components {
+    .pagination {
+        @apply flex items-center gap-1;
+    }
+
+    .pagination-link {
+        @apply px-3 py-2 rounded-lg border border-slate-300 text-sm text-slate-600 hover:bg-slate-100 transition-colors;
+    }
+
+    .pagination-link.active {
+        @apply bg-primary-600 text-white border-primary-600;
+    }
+
+    .pagination-link.disabled {
+        @apply opacity-50 cursor-not-allowed;
+    }
+}
+
+/* BREADCRUMBS */
+@layer components {
+    .breadcrumb {
+        @apply flex items-center gap-2 text-sm;
+    }
+
+    .breadcrumb-item {
+        @apply text-slate-600;
+    }
+
+    .breadcrumb-item.active {
+        @apply text-slate-900 font-medium;
+    }
+
+    .breadcrumb-separator {
+        @apply text-slate-400;
+    }
+}
+
+/* DROPDOWNS */
+@layer components {
+    .dropdown {
+        @apply relative inline-block;
+    }
+
+    .dropdown-menu {
+        @apply absolute top-full right-0 mt-2 bg-white border border-slate-200 rounded-lg shadow-md py-1 min-w-max z-50;
+    }
+
+    .dropdown-item {
+        @apply block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 transition-colors;
+    }
+
+    .dropdown-item.danger {
+        @apply text-danger hover:bg-red-50;
+    }
+
+    .dropdown-divider {
+        @apply border-t border-slate-200 my-1;
+    }
+}
+
+/* STATS CARDS */
+@layer components {
+    .stat-card {
+        @apply card;
+    }
+
+    .stat-card-body {
+        @apply card-body;
+    }
+
+    .stat-value {
+        @apply text-3xl font-bold text-slate-900;
+    }
+
+    .stat-label {
+        @apply text-sm text-slate-600 mt-1;
+    }
+
+    .stat-change {
+        @apply text-xs font-medium mt-2;
+    }
+
+    .stat-change.up {
+        @apply text-green-600;
+    }
+
+    .stat-change.down {
+        @apply text-red-600;
+    }
+}
+
+/* STATUS INDICATORS */
+@layer components {
+    .status-indicator {
+        @apply inline-flex items-center gap-2 text-xs font-medium;
+    }
+
+    .status-dot {
+        @apply w-2 h-2 rounded-full;
+    }
+
+    .status-active {
+        @apply text-green-600;
+    }
+
+    .status-active .status-dot {
+        @apply bg-green-600;
+    }
+
+    .status-inactive {
+        @apply text-slate-400;
+    }
+
+    .status-inactive .status-dot {
+        @apply bg-slate-400;
+    }
+
+    .status-pending {
+        @apply text-amber-600;
+    }
+
+    .status-pending .status-dot {
+        @apply bg-amber-600 animate-pulse;
+    }
+}
+
+/* DIVIDER */
+@layer components {
+    .divider {
+        @apply border-t border-slate-200;
+    }
+
+    .divider-vertical {
+        @apply border-l border-slate-200;
+    }
+}
+
+/* LOADING STATE */
+@layer components {
+    .loading {
+        @apply animate-pulse;
+    }
+
+    .skeleton {
+        @apply bg-slate-200 rounded animate-pulse;
+    }
+}
+
+/* RESPONSIVE UTILITIES */
+@layer utilities {
+    .container-responsive {
+        @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    }
+
+    .grid-responsive {
+        @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+    }
+
+    .flex-center {
+        @apply flex items-center justify-center;
+    }
+
+    .text-truncate {
+        @apply truncate;
+    }
+
+    .text-truncate-2 {
+        @apply line-clamp-2;
+    }
+
+    .transition-smooth {
+        @apply transition-all duration-fast;
+    }
+}

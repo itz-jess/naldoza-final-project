@@ -6,24 +6,31 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('employees', function (Blueprint $table) {
-            $table->id();                   // Primary key
-            $table->string('name');         // Employee name
-            $table->string('email')->unique(); // Employee email, must be unique
-            $table->string('position');     // Job position
-            $table->decimal('salary', 10, 2); // Salary with 2 decimals
-            $table->timestamps();           // created_at & updated_at
+            $table->id();
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('email')->unique();
+            $table->text('address')->nullable();
+            $table->string('contact_number')->nullable();
+            $table->string('position');
+            $table->text('skills')->nullable();
+            $table->string('department')->default('IT');
+            $table->string('rank')->nullable();
+            $table->decimal('salary', 10, 2);
+            $table->integer('leave_credits')->default(15);
+            $table->date('hire_date')->nullable();
+            $table->boolean('is_active')->default(false);
+            $table->foreignId('approved_by')->nullable()->constrained('users');
+            $table->timestamp('approved_at')->nullable();
+            $table->softDeletes();
+            $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('employees');
