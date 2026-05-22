@@ -69,9 +69,6 @@ RUN mkdir -p storage/framework/cache storage/framework/sessions \
     && chown -R www-data:www-data storage bootstrap/cache public/uploads \
     && chmod -R 775 storage bootstrap/cache public/uploads
 
-# Run migrations (ignore errors if database not ready)
-RUN php artisan migrate --force || true
-
 # ===== FIX: Set Apache environment variables =====
 ENV APACHE_RUN_USER=www-data
 ENV APACHE_RUN_GROUP=www-data
@@ -87,5 +84,8 @@ RUN mkdir -p ${APACHE_RUN_DIR} ${APACHE_LOCK_DIR} ${APACHE_LOG_DIR}
 # Expose port 10000 to Render
 EXPOSE 10000
 
-# Start Apache in foreground
-CMD ["apache2", "-DFOREGROUND"]
+# KEEP everything else, then change the bottom to:
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
+
+CMD ["/start.sh"]
